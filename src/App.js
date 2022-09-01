@@ -21,7 +21,10 @@ class App extends React.Component {
     const { name, checked, value } = event.target;
     const type = (name === 'cardTrunfo') ? checked : value;
     this.setState({ [name]: type }, this.buttonEnabler);
-  }; // The second parameter to setState() is an optional callback function that will be executed once setState is completed and the component is re-rendered.
+  };
+
+  // The second parameter to setState() is an optional callback function that will be executed once setState
+  // is completed and the component is re-rendered.
 
   buttonEnabler = () => {
     const min = 0;
@@ -52,7 +55,7 @@ class App extends React.Component {
     }
   };
 
-  onSaveButtonClick = () => {
+  onSaveButtonClick = () => { // Guthias ajudou com a lógica
     const { cardName,
       cardDescription,
       cardAttr1,
@@ -60,7 +63,9 @@ class App extends React.Component {
       cardAttr3,
       cardImage,
       cardRare,
-      savedCards } = this.state;
+      savedCards,
+      cardTrunfo,
+    } = this.state;
 
     const newCard = { cardName,
       cardDescription,
@@ -68,7 +73,13 @@ class App extends React.Component {
       cardAttr2,
       cardAttr3,
       cardImage,
-      cardRare };
+      cardRare,
+      cardTrunfo,
+    };
+
+    if (cardTrunfo === true) {
+      this.setState({ hasTrunfo: true });
+    }
 
     savedCards.push(newCard);
 
@@ -79,15 +90,9 @@ class App extends React.Component {
       cardAttr3: '0',
       cardImage: '',
       cardRare: 'normal',
+      cardTrunfo: false,
     }));
   };
-
-  // GUTHIAS AJUDOU COM A LÓGICA
-
-  // since setState works in an asynchronous way. That means after calling setState the this.state variable is not immediately changed.
-  // so if you want to perform an action immediately after setting state on a state variable and then return a result, a callback will be useful
-
-  //  pegar informacoes das cartas salvar no savedCards, depois fazer uma callback pra o meu setState e depois limpar as informações do estado de novo
 
   render() {
     const {
@@ -134,4 +139,5 @@ class App extends React.Component {
     );
   }
 }
+
 export default App;
