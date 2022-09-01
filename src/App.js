@@ -14,6 +14,7 @@ class App extends React.Component {
     cardTrunfo: false,
     hasTrunfo: false,
     isSaveButtonDisabled: true,
+    savedCards: [], // array de objetos das cartas criadas
   };
 
   onInputChange = (event) => {
@@ -22,7 +23,7 @@ class App extends React.Component {
     this.setState({ [name]: type }, this.buttonEnabler);
   }; // The second parameter to setState() is an optional callback function that will be executed once setState is completed and the component is re-rendered.
 
-  buttonEnabler = () => { // disabled (boolean response) ... checa varificacçoes
+  buttonEnabler = () => {
     const min = 0;
     const max = 90;
     const sum = 210;
@@ -51,7 +52,42 @@ class App extends React.Component {
     }
   };
 
-  // onSaveButtonClick = () => { // execute this when click
+  onSaveButtonClick = () => {
+    const { cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      savedCards } = this.state;
+
+    const newCard = { cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare };
+
+    savedCards.push(newCard);
+
+    this.setState(() => ({ cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: 'normal',
+    }));
+  };
+
+  // GUTHIAS AJUDOU COM A LÓGICA
+
+  // since setState works in an asynchronous way. That means after calling setState the this.state variable is not immediately changed.
+  // so if you want to perform an action immediately after setting state on a state variable and then return a result, a callback will be useful
+
+  //  pegar informacoes das cartas salvar no savedCards, depois fazer uma callback pra o meu setState e depois limpar as informações do estado de novo
 
   render() {
     const {
